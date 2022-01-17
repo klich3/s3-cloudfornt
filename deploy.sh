@@ -20,16 +20,23 @@
 
 PROFILE=$1
 S3=$2
-FOLDER=$3
 
-if [ -z "$4" ]; then
-    REGION=$4
+if [ -z "$3" ]; then
+    FOLDER='./dist'
 else
-    REGION='eu-central-1'
+    FOLDER=$3
 fi
 
-echo "[->] UPLOADING TO S3"
-aws --profile $PROFILE --region eu-central-1 s3 sync $FOLDER s3://$S3 --delete
+if [ -z "$4" ]; then
+    REGION='eu-central-1'
+else
+    REGION=$4
+fi
+
+echo "[->] UPLOADING FROM $FOLDER TO S3://$S3 REGION: $REGION"
+aws --profile $PROFILE --region $REGION s3 rm s3://$S3 --recursive
+aws --profile $PROFILE --region $REGION s3 sync $FOLDER s3://$S3 --delete
+
 echo "[->] DONE"
 echo "[->] GET IDS FROM CLOUDFRONT"
 AWSDISTR=$(aws --profile $PROFILE cloudfront list-distributions)
@@ -55,3 +62,4 @@ echo "[->] CLOUDFRONT DISTRIBUTION ID:$DISTRIBUTIONS"
 echo "[->] INVALIDATE DISTRIBUTION ON CLOUDFRONT"
 aws --profile $PROFILE cloudfront create-invalidation --distribution-id $DISTRIBUTIONS --invalidation-batch '{ "Paths": { "Quantity": 1, "Items": [ "/*" ] }, "CallerReference": "beame-invalidation-'"$(date +%s)"'"}'
 echo "[->] DONE"
+exit 0

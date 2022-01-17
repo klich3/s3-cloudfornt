@@ -34,5 +34,5 @@ In your `package.json` file
 ```
 
 ```shell
-npm run deploy-dev`
+npm run deploy-dev
 ```
