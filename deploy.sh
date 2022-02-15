@@ -34,9 +34,9 @@ else
     REGION=$4
 fi
 
-#echo "[->] UPLOADING FROM $FOLDER TO S3://$S3 REGION: $REGION"
-#aws --profile $PROFILE --region $REGION s3 rm s3://$S3 --recursive
-#aws --profile $PROFILE --region $REGION s3 sync $FOLDER s3://$S3 --delete
+echo "[->] UPLOADING FROM $FOLDER TO S3://$S3 REGION: $REGION"
+aws --profile $PROFILE --region $REGION s3 rm s3://$S3 --recursive
+aws --profile $PROFILE --region $REGION s3 sync $FOLDER s3://$S3 --delete
 
 echo "[->] DONE"
 echo "[->] GET IDS FROM CLOUDFRONT"
