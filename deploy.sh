@@ -20,6 +20,7 @@
 
 PROFILE=$1
 S3=$2
+SOUCES3=$(echo  "$S3" | sed 's/\/.*//')
 
 if [ -z "$3" ]; then
     FOLDER='./dist'
@@ -33,14 +34,14 @@ else
     REGION=$4
 fi
 
-echo "[->] UPLOADING FROM $FOLDER TO S3://$S3 REGION: $REGION"
-aws --profile $PROFILE --region $REGION s3 rm s3://$S3 --recursive
-aws --profile $PROFILE --region $REGION s3 sync $FOLDER s3://$S3 --delete
+#echo "[->] UPLOADING FROM $FOLDER TO S3://$S3 REGION: $REGION"
+#aws --profile $PROFILE --region $REGION s3 rm s3://$S3 --recursive
+#aws --profile $PROFILE --region $REGION s3 sync $FOLDER s3://$S3 --delete
 
 echo "[->] DONE"
 echo "[->] GET IDS FROM CLOUDFRONT"
 AWSDISTR=$(aws --profile $PROFILE cloudfront list-distributions)
-DISTRIBUTIONS=$(echo $AWSDISTR | jq -r '.DistributionList.Items[] | "\(.Id) \(.Aliases.Items[0])"' | awk -v S3="$S3" '$2==S3 { print $1 }')
+DISTRIBUTIONS=$(echo $AWSDISTR | jq -r '.DistributionList.Items[] | "\(.Id) \(.Aliases.Items[0])"' | awk -v S3="$SOUCES3" '$2==S3 { print $1 }')
 
 # {
 #    "DistributionList": {
