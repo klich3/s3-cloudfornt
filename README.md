@@ -1,7 +1,6 @@
-# S3 Upload & CloudFront Invalidation of last Distribution
+# Script for deploy your static site to S3 and recresh CloudFront Invalidation of last Distribution
 
-If you have your static websites allocated on S3 Buscket / CloadFront, and needs autoupload / replace files on your bucket?
-This script is for add on your NPM project for upload files deleting all oldest and creating distribution invalidation for create new cache.
+It is a script that allows you to upload / deploy a static website deploy with a command. For this you need to have the Amazon CLI tool installed. You have to get it on your local machine, in package.json you put the profile name, and the target Backit. What it does is to upload the content and update cache in CloudFront.
 
 ## Instalation
 
