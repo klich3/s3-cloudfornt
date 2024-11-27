@@ -1,4 +1,4 @@
-# Script for deploy your static site to S3 and recresh CloudFront Invalidation of last Distribution
+# Script for deploy your static site to S3 and refresh CloudFront Distribution
 
 It is a script that allows you to upload / deploy a static website deploy with a command. For this you need to have the Amazon CLI tool installed. You have to get it on your local machine, in package.json you put the profile name, and the target Backit. What it does is to upload the content and update cache in CloudFront.
 
